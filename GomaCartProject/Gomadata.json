@@ -1,0 +1,25 @@
+{
+  "shoppingItems": [
+    {
+      "name": "りんご",
+      "qty": "3",
+      "memo": "甘い"
+    }
+  ],
+  "stockItems": [
+    {
+      "name": "牛乳",
+      "qty": "2",
+      "memo": "朝"
+    }
+  ],
+  "storeItems": [
+    {
+      "storeName": "A店",
+      "itemName": "パン",
+      "price": "180",
+      "memo": "安い"
+    }
+  ],
+  "updatedAt": "2026-09-12T21:04:18.792Z"
+}

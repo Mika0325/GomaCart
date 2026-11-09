@@ -1,0 +1,21 @@
+{
+    "name": "Gomacart",
+    "short_name": "Gomacart",
+    "start_url": "./Goma.html",
+    "scope": "./",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#f09199",
+    "icons": [
+        {
+            "src": "Sakura-2.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "Sakura.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

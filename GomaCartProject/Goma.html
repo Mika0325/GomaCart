@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gomacart</title>
+    <link rel="stylesheet" href="Cart.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+    <header>🌸 Gomacart</header>
+
+    <main>
+        <section id="shopping" class="tab-content active">
+            <h2>買い物リスト</h2>
+            <input id="itemName" type="text" placeholder="アイテム名">
+            <input id="itemQty" type="text" placeholder="数量">
+            <textarea id="itemMemo" placeholder="メモ"></textarea>
+            <button class="add-btn" id="addItemBtn">追加</button>
+            <ul class="item-list" id="shoppingList"></ul>
+        </section>
+
+        <section id="stock" class="tab-content">
+            <h2>在庫管理</h2>
+            <input id="stockName" type="text" placeholder="アイテム名">
+            <input id="stockQty" type="text" placeholder="数量">
+            <textarea id="stockMemo" placeholder="メモ"></textarea>
+            <button class="add-btn" id="addStockBtn">追加</button>
+            <ul class="item-list" id="stockList"></ul>
+        </section>
+
+        <section id="store" class="tab-content">
+            <h2>店舗メモ</h2>
+            <input id="storeName" type="text" placeholder="店舗名">
+            <input id="storeItem" type="text" placeholder="商品名">
+            <input id="storePrice" type="text" placeholder="値段">
+            <textarea id="storeMemo" placeholder="メモ"></textarea>
+            <button class="add-btn" id="addStoreBtn">追加</button>
+            <ul class="item-list" id="storeList"></ul>
+
+        </section>
+    </main>
+
+    <nav>
+        <button class="active" onclick="showTab('shopping', this)">🛒 買い物</button>
+        <button onclick="showTab('stock', this)">📦 在庫</button>
+        <button onclick="showTab('store', this)">🏪 店舗</button>
+    </nav>
+
+    <script type="module" src="GomaCart.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js')
+                .then(() => console.log('Service Worker登録成功'))
+                .catch(err => console.error('Service Worker登録失敗:', err));
+        }
+    </script>
+</body>
+
+</html>

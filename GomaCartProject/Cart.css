@@ -1,0 +1,178 @@
+body {
+    font-family: "Segoe UI", sans-serif;
+    background-color: #ffffff;
+    color: #333333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ===== ヘッダー ===== */
+header {
+    background-color: #fef4f4;
+    color: #333333;
+    text-align: center;
+    padding: 1rem;
+    font-weight: bold;
+    font-size: 1.5rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== メイン ===== */
+main {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+/* ===== タブ ===== */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* ===== ナビ ===== */
+nav {
+    display: flex;
+    justify-content: space-around;
+    background-color: #ffffff;
+    border-top: 2px solid #fef4f4;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+}
+
+nav button {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 1rem 0.5rem;
+    font-size: 1rem;
+    color: #666666;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+nav button.active {
+    color: #f09199;
+    font-weight: bold;
+    border-top: 3px solid #f09199;
+}
+
+/* ===== リスト ===== */
+.item-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 0.5rem;
+}
+
+.item-list li {
+    background: #fef4f4;
+    margin: 0.5rem 0;
+    padding: 0.8rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* ===== ボタン ===== */
+.item-list button {
+    margin-left: 0.3rem;
+    background-color: #fef4f4;
+    border: none;
+    border-radius: 5px;
+    padding: 0.3rem 0.5rem;
+    cursor: pointer;
+    color: #333333;
+    font-size: 0.8rem;
+}
+
+.item-list button.delete-btn {
+    background-color: #f09199;
+    color: #ffffff;
+}
+
+/* ===== 入力 ===== */
+input,
+textarea {
+    width: 100%;
+    padding: 0.5rem;
+    margin: 0.3rem 0;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+button.add-btn {
+    background-color: #f09199;
+    color: #ffffff;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    width: 100%;
+    font-size: 1rem;
+}
+
+/* ============
+   スマホ対応
+============== */
+@media (max-width: 600px) {
+
+    header {
+        font-size: 1.2rem;
+        padding: 0.8rem;
+    }
+
+    main {
+        padding: 0.5rem;
+    }
+
+    input,
+    textarea {
+        font-size: 1rem;
+    }
+
+    button.add-btn {
+        font-size: 1rem;
+        padding: 0.8rem;
+    }
+
+    /* カードを縦並びに */
+    .item-list li {
+        font-size: 0.9rem;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    /* ボタン共通 */
+    .item-list button {
+        margin-top: 0.6rem;
+    }
+
+    /* 左下（在庫へ・編集） */
+    .item-list button:not(.delete-btn) {
+        align-self: flex-start;
+    }
+
+    /* 右下（削除） */
+    .item-list button.delete-btn {
+        align-self: flex-end;
+    }
+
+    body {
+        padding-bottom: 4rem;
+    }
+}
