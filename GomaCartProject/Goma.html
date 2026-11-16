@@ -41,9 +41,16 @@
             <ul class="item-list" id="storeList"></ul>
         </section>
 
-        <!-- アカウント・会員登録 -->
+        <!-- アカウント・会員登録・ログイン -->
         <section id="account" class="tab-content">
             <h2>アカウント</h2>
+
+            <h3>ログイン</h3>
+            <p>登録済みのメールアドレスとパスワードを入力してください</p>
+            <input id="loginEmail" type="email" placeholder="メールアドレス" autocomplete="email">
+            <input id="loginPassword" type="password" placeholder="パスワード" autocomplete="current-password">
+            <button class="add-btn" id="loginBtn">ログイン</button>
+
             <h3>新規会員登録</h3>
             <p>メールアドレスとパスワードを登録してください</p>
             <input id="registerEmail" type="email" placeholder="メールアドレス" autocomplete="email">

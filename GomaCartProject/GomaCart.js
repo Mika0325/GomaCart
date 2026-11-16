@@ -16,7 +16,8 @@ import {
     signInAnonymously,
     onAuthStateChanged,
     linkWithCredential,
-    EmailAuthProvider
+    EmailAuthProvider,
+    signInWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
 
 const firebaseConfig = {
@@ -65,6 +66,10 @@ const addItemBtn = document.getElementById('addItemBtn');
 const addStockBtn = document.getElementById('addStockBtn');
 const addStoreBtn = document.getElementById('addStoreBtn');
 
+const loginEmail = document.getElementById('loginEmail');
+const loginPassword = document.getElementById('loginPassword');
+const loginBtn = document.getElementById('loginBtn');
+
 const registerEmail = document.getElementById('registerEmail');
 const registerPassword = document.getElementById('registerPassword');
 const registerPasswordConfirm = document.getElementById('registerPasswordConfirm');
@@ -73,6 +78,53 @@ const registerBtn = document.getElementById('registerBtn');
 /* =============================
    会員登録
 ============================= */
+loginBtn.addEventListener('click', async () => {
+
+    const email = loginEmail.value.trim();
+    const password = loginPassword.value;
+
+    if (!email || !password) {
+        alert('メールアドレスとパスワードを入力してください。');
+        return;
+    }
+
+    try {
+        const userCredential = await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
+
+        // ログインした利用者のUIDに切り替える
+        currentUserId = userCredential.user.uid;
+
+        console.log('ログインに成功しました。');
+        console.log('利用者ID:', currentUserId);
+
+        // ログインした利用者のデータを読み込む
+        await loadData();
+
+        loginEmail.value = '';
+        loginPassword.value = '';
+
+        alert('ログインしました。');
+
+    } catch (error) {
+
+        console.error('ログインに失敗しました。', error);
+
+        if (error.code === 'auth/invalid-credential') {
+            alert('メールアドレスまたはパスワードが正しくありません。');
+        } else if (error.code === 'auth/invalid-email') {
+            alert('メールアドレスの形式が正しくありません。');
+        } else if (error.code === 'auth/too-many-requests') {
+            alert('ログイン試行が多すぎます。時間をおいて再度お試しください。');
+        } else {
+            alert('ログインに失敗しました。入力内容や通信環境を確認してください。');
+        }
+    }
+});
+
 registerBtn.addEventListener('click', async () => {
 
     // 入力内容を取得
