@@ -39,7 +39,17 @@
             <textarea id="storeMemo" placeholder="メモ"></textarea>
             <button class="add-btn" id="addStoreBtn">追加</button>
             <ul class="item-list" id="storeList"></ul>
+        </section>
 
+        <!-- アカウント・会員登録 -->
+        <section id="account" class="tab-content">
+            <h2>アカウント</h2>
+            <h3>新規会員登録</h3>
+            <p>メールアドレスとパスワードを登録してください</p>
+            <input id="registerEmail" type="email" placeholder="メールアドレス" autocomplete="email">
+            <input id="registerPassword" type="password" placeholder="パスワード(8文字以上)" autocomplete="new-password">
+            <input id="registerPasswordConfirm" type="password" placeholder="パスワード確認" autocomplete="new-password">
+            <button class="add-btn" id="registerBtn">会員登録</button>
         </section>
     </main>
 
@@ -47,9 +57,11 @@
         <button class="active" onclick="showTab('shopping', this)">🛒 買い物</button>
         <button onclick="showTab('stock', this)">📦 在庫</button>
         <button onclick="showTab('store', this)">🏪 店舗</button>
+        <button onclick="showTab('account', this)">👤 アカウント</button>
     </nav>
 
     <script type="module" src="GomaCart.js"></script>
+
     <script>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('service-worker.js')
