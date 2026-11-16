@@ -13,7 +13,10 @@ import {
 
 import {
     getAuth,
-    signInAnonymously
+    signInAnonymously,
+    onAuthStateChanged,
+    linkWithCredential,
+    EmailAuthProvider
 } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
 
 const firebaseConfig = {
@@ -526,15 +529,46 @@ window.showTab = showTab;
 /* =============================
    初期化
 ============================= */
+async function getCurrentUser() {
+    return new Promise((resolve, reject) => {
+
+        const unsubscribe = onAuthStateChanged(
+            auth,
+            async (user) => {
+
+                unsubscribe();
+
+                try {
+                    // 既にログインしている場合
+                    if (user) {
+                        resolve(user);
+                        return;
+                    }
+
+                    // 未ログインの場合は匿名認証
+                    const userCredential =
+                        await signInAnonymously(auth);
+
+                    resolve(userCredential.user);
+
+                } catch (error) {
+                    reject(error);
+                }
+            },
+            reject
+        );
+    });
+}
+
 async function initializeGomaCart() {
     try {
-        // 匿名認証
-        const userCredential = await signInAnonymously(auth);
+        // 現在のログイン状態を確認
+        const user = await getCurrentUser();
 
         // 利用者IDを取得
-        currentUserId = userCredential.user.uid;
+        currentUserId = user.uid;
 
-        console.log('匿名ログインに成功しました。');
+        console.log('ログインに成功しました。');
         console.log('利用者ID:', currentUserId);
 
         // Firestoreからデータを読み込む
