@@ -25,7 +25,7 @@ main {
     flex: 1;
     padding: 1rem;
     overflow-y: auto;
-    padding-bottom: 7rem;
+    padding-bottom: 6rem;
 }
 
 /* ===== タブ ===== */
@@ -138,6 +138,7 @@ button.add-btn {
 
     main {
         padding: 0.5rem;
+        ｐadding-bottom: 6rem;
     }
 
     input,
