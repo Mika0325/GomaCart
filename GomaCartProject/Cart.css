@@ -25,6 +25,7 @@ main {
     flex: 1;
     padding: 1rem;
     overflow-y: auto;
+    padding-bottom: 6rem;
 }
 
 /* ===== タブ ===== */
