@@ -17,7 +17,8 @@ import {
     onAuthStateChanged,
     linkWithCredential,
     EmailAuthProvider,
-    signInWithEmailAndPassword
+    signInWithEmailAndPassword,
+    signOut
 } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
 
 const firebaseConfig = {
@@ -75,6 +76,9 @@ const registerPassword = document.getElementById('registerPassword');
 const registerPasswordConfirm = document.getElementById('registerPasswordConfirm');
 const registerBtn = document.getElementById('registerBtn');
 
+const accountStatus = document.getElementById('accountStatus');
+const logoutBtn = document.getElementById('logoutBtn');
+
 /* =============================
    会員登録
 ============================= */
@@ -122,6 +126,41 @@ loginBtn.addEventListener('click', async () => {
         } else {
             alert('ログインに失敗しました。入力内容や通信環境を確認してください。');
         }
+    }
+});
+
+logoutBtn.addEventListener('click', async () => {
+
+    const confirmLogout = confirm('ログアウトしますか？');
+
+    if (!confirmLogout) {
+        return;
+    }
+
+    try {
+        // 現在のアカウントからログアウト
+        await signOut(auth);
+
+        // ゲスト利用用の匿名アカウントを作成
+        const userCredential = await signInAnonymously(auth);
+
+        // 新しい利用者IDに切り替える
+        currentUserId = userCredential.user.uid;
+
+        // ゲスト用のデータを読み込む
+        await loadData();
+
+        // アカウント情報を更新
+        accountStatus.textContent = 'ゲスト利用中';
+
+        alert('ログアウトしました。');
+
+        console.log('ログアウトしました。');
+        console.log('新しい利用者ID:', currentUserId);
+
+    } catch (error) {
+        console.error('ログアウトに失敗しました。', error);
+        alert('ログアウトに失敗しました。');
     }
 });
 
@@ -709,25 +748,27 @@ async function getCurrentUser() {
 
 async function initializeGomaCart() {
     try {
-        // 現在のログイン状態を確認
         const user = await getCurrentUser();
 
-        // 利用者IDを取得
         currentUserId = user.uid;
+        accountStatus.textContent =
+            `ログイン中：${userCredential.user.email}`;
+
+        // アカウント状態を表示
+        if (user.isAnonymous) {
+            accountStatus.textContent = 'ゲスト利用中';
+        } else {
+            accountStatus.textContent = `ログイン中：${user.email}`;
+        }
 
         console.log('ログインに成功しました。');
         console.log('利用者ID:', currentUserId);
 
-        // Firestoreからデータを読み込む
         await loadData();
 
     } catch (error) {
         console.error('初期化に失敗しました。', error);
-
-        alert(
-            'GomaCartの初期化に失敗しました。\n' +
-            'Firebase Authenticationの設定を確認してください。'
-        );
+        alert('GomaCartの初期化に失敗しました。\nFirebase Authenticationの設定を確認してください。');
     }
 }
 
