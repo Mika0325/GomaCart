@@ -452,7 +452,12 @@ function renderShoppingList() {
                     ⋮
                 </button>
 
-                <div class="submenu" hidden>
+            <div class="submenu" hidden>
+                <button class="move-btn"
+                        data-index="${index}">
+                        在庫へ
+                    </button>
+
                     <button class="edit-btn"
                         data-type="shopping"
                         data-index="${index}">
@@ -463,11 +468,6 @@ function renderShoppingList() {
                         data-type="shopping"
                         data-index="${index}">
                         削除
-                    </button>
-
-                    <button class="move-btn"
-                        data-index="${index}">
-                        在庫へ
                     </button>
                 </div>
             </div>

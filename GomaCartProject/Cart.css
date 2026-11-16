@@ -126,9 +126,7 @@ button.add-btn {
     font-size: 1rem;
 }
 
-/* =============================
-   三点リーダー・サブメニュー
-============================= */
+/* ===== 三点リーダー・サブメニュー ===== */
 .item-actions {
     display: flex;
     align-items: center;
@@ -167,24 +165,52 @@ button.add-btn {
     display: none;
 }
 
+/* ===== サブメニューボタン ===== */
 .submenu button {
     display: block;
     width: 100%;
     border: none;
-    background: white;
-    padding: 0.6rem;
+    padding: 0.7rem 0.8rem;
+    margin: 0;
     text-align: left;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
 }
 
-.submenu button:hover {
-    background: #fce4ec;
+/* 在庫へ */
+.submenu .move-btn {
+    background-color: #fff0f0;
+    color: #d9534f;
 }
 
-/* ============
-   スマホ対応
-============== */
+/* 編集 */
+.submenu .edit-btn {
+    background-color: #fce4ec;
+    color: #333333;
+}
+
+/* 削除 */
+.submenu .delete-btn {
+    background-color: #f09199;
+    color: white;
+}
+
+/* マウスを乗せたとき */
+.submenu .move-btn:hover {
+    background-color: #ffe0e0;
+}
+
+.submenu .edit-btn:hover {
+    background-color: #f8d5df;
+}
+
+.submenu .delete-btn:hover {
+    background-color: #e77f89;
+}
+
+/* ===== スマホUI対応 ===== */
 @media (max-width: 600px) {
 
     header {
