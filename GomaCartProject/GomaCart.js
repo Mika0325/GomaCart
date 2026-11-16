@@ -437,20 +437,41 @@ function renderList(listElem, items, renderFn) {
 ============================= */
 function renderShoppingList() {
     renderList(shoppingList, shoppingItems, (item, index) => `
-        ${escapeHTML(item.name)}
-        ${item.qty ? '(' + escapeHTML(item.qty) + ')' : ''}
-        ${item.memo ? ' - ' + escapeHTML(item.memo) : ''}
+        <div class="item-content">
+            ${escapeHTML(item.name)}
+            ${item.qty ? '(' + escapeHTML(item.qty) + ')' : ''}
+            ${item.memo ? ' - ' + escapeHTML(item.memo) : ''}
+        </div>
 
-        <button class="delete-btn"
-            data-type="shopping"
-            data-index="${index}">
-            削除
-        </button>
+        <div class="item-actions">
+            <button class="move-btn"
+                data-index="${index}">
+                在庫へ
+            </button>
 
-        <button class="move-btn"
-            data-index="${index}">
-            在庫へ
-        </button>
+            <div class="menu-container">
+                <button class="menu-btn"
+                    type="button"
+                    aria-label="メニュー"
+                    aria-expanded="false">
+                    ⋮
+                </button>
+
+                <div class="submenu" hidden>
+                    <button class="edit-btn"
+                        data-type="shopping"
+                        data-index="${index}">
+                        編集
+                    </button>
+
+                    <button class="delete-btn"
+                        data-type="shopping"
+                        data-index="${index}">
+                        削除
+                    </button>
+                </div>
+            </div>
+        </div>
     `);
 }
 
@@ -459,21 +480,36 @@ function renderShoppingList() {
 ============================= */
 function renderStockList() {
     renderList(stockList, stockItems, (item, index) => `
-        ${escapeHTML(item.name)}
-        ${item.qty ? '(' + escapeHTML(item.qty) + ')' : ''}
-        ${item.memo ? ' - ' + escapeHTML(item.memo) : ''}
+        <div class="item-content">
+            ${escapeHTML(item.name)}
+            ${item.qty ? '(' + escapeHTML(item.qty) + ')' : ''}
+            ${item.memo ? ' - ' + escapeHTML(item.memo) : ''}
+        </div>
 
-        <button class="edit-btn"
-            data-type="stock"
-            data-index="${index}">
-            編集
-        </button>
+        <div class="item-actions">
+            <div class="menu-container">
+                <button class="menu-btn"
+                    type="button"
+                    aria-label="メニュー"
+                    aria-expanded="false">
+                    ⋮
+                </button>
 
-        <button class="delete-btn"
-            data-type="stock"
-            data-index="${index}">
-            削除
-        </button>
+                <div class="submenu" hidden>
+                    <button class="edit-btn"
+                        data-type="stock"
+                        data-index="${index}">
+                        編集
+                    </button>
+
+                    <button class="delete-btn"
+                        data-type="stock"
+                        data-index="${index}">
+                        削除
+                    </button>
+                </div>
+            </div>
+        </div>
     `);
 }
 
@@ -593,6 +629,47 @@ document.addEventListener('click', async e => {
     if (!(target instanceof Element)) return;
 
     const index = Number(target.dataset.index);
+
+    // 三点リーダーのメニュー開閉
+    if (target.closest('.menu-btn')) {
+        const menuBtn = target.closest('.menu-btn');
+        const menuContainer = menuBtn.closest('.menu-container');
+        const submenu = menuContainer.querySelector('.submenu');
+
+        // ほかに開いているメニューを閉じる
+        document.querySelectorAll('.submenu').forEach(menu => {
+            if (menu !== submenu) {
+                menu.hidden = true;
+
+                const otherBtn = menu.parentElement.querySelector('.menu-btn');
+                if (otherBtn) {
+                    otherBtn.setAttribute('aria-expanded', 'false');
+                }
+            }
+        });
+
+        // 選択したメニューを開閉
+        submenu.hidden = !submenu.hidden;
+
+        menuBtn.setAttribute(
+            'aria-expanded',
+            String(!submenu.hidden)
+        );
+
+        return;
+    }
+
+    // メニュー以外をクリックしたら閉じる
+    if (!target.closest('.menu-container')) {
+        document.querySelectorAll('.submenu').forEach(menu => {
+            menu.hidden = true;
+
+            const menuBtn = menu.parentElement.querySelector('.menu-btn');
+            if (menuBtn) {
+                menuBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
 
     // 削除
     if (target.classList.contains('delete-btn')) {

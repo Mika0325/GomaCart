@@ -126,6 +126,62 @@ button.add-btn {
     font-size: 1rem;
 }
 
+/* =============================
+   三点リーダー・サブメニュー
+============================= */
+.item-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.menu-container {
+    position: relative;
+    display: inline-block;
+}
+
+.menu-btn {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.2rem 0.6rem;
+    color: #555;
+}
+
+.submenu {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    min-width: 100px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    z-index: 100;
+    padding: 0.3rem;
+}
+
+.submenu[hidden] {
+    display: none;
+}
+
+.submenu button {
+    display: block;
+    width: 100%;
+    border: none;
+    background: white;
+    padding: 0.6rem;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.submenu button:hover {
+    background: #fce4ec;
+}
+
 /* ============
    スマホ対応
 ============== */
