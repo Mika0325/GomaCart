@@ -207,27 +207,52 @@ button.add-btn {
         padding: 0.8rem;
     }
 
-    /* カードを縦並びに */
+    /* カードの配置 */
     .item-list li {
         font-size: 0.9rem;
         display: flex;
-        flex-direction: column;
-        align-items: stretch;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
     }
 
-    /* ボタン共通 */
-    .item-list button {
-        margin-top: 0.6rem;
+    /* 商品名・メモ */
+    .item-content {
+        flex: 1;
+        min-width: 0;
+        overflow-wrap: anywhere;
     }
 
-    /* 左下（在庫へ・編集） */
-    .item-list button:not(.delete-btn) {
-        align-self: flex-start;
+    /* 操作エリア */
+    .item-actions {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
     }
 
-    /* 右下（削除） */
-    .item-list button.delete-btn {
-        align-self: flex-end;
+    /* 三点リーダー */
+    .menu-container {
+        position: relative;
+    }
+
+    .menu-btn {
+        min-width: 44px;
+        min-height: 44px;
+        font-size: 1.6rem;
+    }
+
+    /* サブメニュー */
+    .submenu {
+        right: 0;
+        top: 100%;
+        min-width: 110px;
+        max-width: calc(100vw - 2rem);
+    }
+
+    .submenu button {
+        min-height: 44px;
+        font-size: 0.95rem;
     }
 
     body {

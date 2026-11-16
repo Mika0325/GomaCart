@@ -444,11 +444,6 @@ function renderShoppingList() {
         </div>
 
         <div class="item-actions">
-            <button class="move-btn"
-                data-index="${index}">
-                在庫へ
-            </button>
-
             <div class="menu-container">
                 <button class="menu-btn"
                     type="button"
@@ -468,6 +463,11 @@ function renderShoppingList() {
                         data-type="shopping"
                         data-index="${index}">
                         削除
+                    </button>
+
+                    <button class="move-btn"
+                        data-index="${index}">
+                        在庫へ
                     </button>
                 </div>
             </div>
@@ -518,29 +518,44 @@ function renderStockList() {
 ============================= */
 function renderStoreList() {
     renderList(storeList, storeItems, (item, index) => `
-        ${escapeHTML(item.storeName)}
-        -
-        ${escapeHTML(item.itemName)}
+        <div class="item-content">
+            ${escapeHTML(item.storeName)}
+            -
+            ${escapeHTML(item.itemName)}
 
-        ${item.price
+            ${item.price
             ? '(' + escapeHTML(item.price) + '円)'
             : ''}
 
-        ${item.memo
+            ${item.memo
             ? ' - ' + escapeHTML(item.memo)
             : ''}
+        </div>
 
-        <button class="edit-btn"
-            data-type="store"
-            data-index="${index}">
-            編集
-        </button>
+        <div class="item-actions">
+            <div class="menu-container">
+                <button class="menu-btn"
+                    type="button"
+                    aria-label="メニュー"
+                    aria-expanded="false">
+                    ⋮
+                </button>
 
-        <button class="delete-btn"
-            data-type="store"
-            data-index="${index}">
-            削除
-        </button>
+                <div class="submenu" hidden>
+                    <button class="edit-btn"
+                        data-type="store"
+                        data-index="${index}">
+                        編集
+                    </button>
+
+                    <button class="delete-btn"
+                        data-type="store"
+                        data-index="${index}">
+                        削除
+                    </button>
+                </div>
+            </div>
+        </div>
     `);
 }
 
