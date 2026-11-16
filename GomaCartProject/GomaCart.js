@@ -65,6 +65,101 @@ const addItemBtn = document.getElementById('addItemBtn');
 const addStockBtn = document.getElementById('addStockBtn');
 const addStoreBtn = document.getElementById('addStoreBtn');
 
+const registerEmail = document.getElementById('registerEmail');
+const registerPassword = document.getElementById('registerPassword');
+const registerPasswordConfirm = document.getElementById('registerPasswordConfirm');
+const registerBtn = document.getElementById('registerBtn');
+
+/* =============================
+   会員登録
+============================= */
+registerBtn.addEventListener('click', async () => {
+
+    // 入力内容を取得
+    const email = registerEmail.value.trim();
+    const password = registerPassword.value;
+    const passwordConfirm = registerPasswordConfirm.value;
+
+    // メールアドレスの確認
+    if (!email) {
+        alert('メールアドレスを入力してください。');
+        return;
+    }
+
+    // パスワードの確認
+    if (!password) {
+        alert('パスワードを入力してください。');
+        return;
+    }
+
+    // パスワードの文字数確認
+    if (password.length < 8) {
+        alert('パスワードは8文字以上で入力してください。');
+        return;
+    }
+
+    // パスワード一致確認
+    if (password !== passwordConfirm) {
+        alert('パスワードが一致していません。');
+        return;
+    }
+
+    // 現在のログイン状態を確認
+    const user = auth.currentUser;
+
+    if (!user) {
+        alert('Firebaseに接続中です。少し待ってから再度お試しください。');
+        return;
+    }
+
+    if (!user.isAnonymous) {
+        alert('すでに会員登録されています。');
+        return;
+    }
+
+    try {
+        // メールアドレスとパスワードの認証情報を作成
+        const credential = EmailAuthProvider.credential(
+            email,
+            password
+        );
+
+        // 現在の匿名アカウントに会員情報を紐づける
+        const userCredential = await linkWithCredential(
+            user,
+            credential
+        );
+
+        // UIDを維持
+        currentUserId = userCredential.user.uid;
+
+        alert('会員登録が完了しました。');
+
+        // 入力欄を空にする
+        registerEmail.value = '';
+        registerPassword.value = '';
+        registerPasswordConfirm.value = '';
+
+        console.log('会員登録に成功しました。');
+        console.log('利用者ID:', currentUserId);
+
+    } catch (error) {
+        console.error('会員登録に失敗しました。', error);
+
+        if (error.code === 'auth/email-already-in-use') {
+            alert('このメールアドレスはすでに使用されています。');
+        } else if (error.code === 'auth/invalid-email') {
+            alert('メールアドレスの形式が正しくありません。');
+        } else if (error.code === 'auth/weak-password') {
+            alert('パスワードが弱すぎます。');
+        } else if (error.code === 'auth/network-request-failed') {
+            alert('ネットワーク接続を確認してください。');
+        } else {
+            alert('会員登録に失敗しました。入力内容を確認してください。');
+        }
+    }
+});
+
 /* =============================
    Firestoreの保存先
 ============================= */
