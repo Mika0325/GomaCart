@@ -101,6 +101,8 @@ loginBtn.addEventListener('click', async () => {
 
         // ログインした利用者のUIDに切り替える
         currentUserId = userCredential.user.uid;
+        accountStatus.textContent =
+            `ログイン中：${userCredential.user.email}`;
 
         console.log('ログインに成功しました。');
         console.log('利用者ID:', currentUserId);
@@ -751,8 +753,6 @@ async function initializeGomaCart() {
         const user = await getCurrentUser();
 
         currentUserId = user.uid;
-        accountStatus.textContent =
-            `ログイン中：${userCredential.user.email}`;
 
         // アカウント状態を表示
         if (user.isAnonymous) {
