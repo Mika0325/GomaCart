@@ -72,6 +72,13 @@ const storeSearchView = document.getElementById('storeSearchView');
 const openStoreSearchBtn = document.getElementById('openStoreSearchBtn');
 const backToStoreBtn = document.getElementById('backToStoreBtn');
 
+const storeSearchInput = document.getElementById('storeSearchInput');
+const showStoreListBtn = document.getElementById('showStoreListBtn');
+const showProductListBtn = document.getElementById('showProductListBtn');
+const storeSearchList = document.getElementById('storeSearchList');
+
+let currentStoreSearchType = 'store';
+
 const loginEmail = document.getElementById('loginEmail');
 const loginPassword = document.getElementById('loginPassword');
 const loginBtn = document.getElementById('loginBtn');
@@ -597,6 +604,54 @@ function renderStoreList() {
 }
 
 /* =============================
+   店舗・商品検索一覧の描画
+============================= */
+function renderStoreSearchList() {
+
+    // 検索文字を取得
+    const keyword = storeSearchInput.value.trim().toLowerCase();
+
+    if (currentStoreSearchType === 'store') {
+
+        const stores = [...new Set(
+            storeItems.map(item => item.storeName)
+        )];
+
+        // 検索文字で絞り込み
+        const filteredStores = stores.filter(store =>
+            store.toLowerCase().includes(keyword)
+        );
+
+        renderList(storeSearchList, filteredStores, store => `
+            <div class="item-content">
+                ${escapeHTML(store)}
+            </div>
+        `);
+
+    }
+
+    // 商品一覧
+    else {
+
+        // 重複しない商品名を取得
+        const products = [...new Set(
+            storeItems.map(item => item.itemName)
+        )];
+
+        // 検索文字で絞り込み
+        const filteredProducts = products.filter(product =>
+            product.toLowerCase().includes(keyword)
+        );
+
+        renderList(storeSearchList, filteredProducts, product => `
+            <div class="item-content">
+                ${escapeHTML(product)}
+            </div>
+        `);
+    }
+}
+
+/* =============================
    すべてのリストを再描画
 ============================= */
 function renderAllLists() {
@@ -874,7 +929,6 @@ document.addEventListener('click', async e => {
             };
         }
 
-        // 店舗メモ編集
         else if (type === 'store') {
             const item = storeItems[index];
 
@@ -929,17 +983,38 @@ window.showTab = showTab;
 /* =============================
    店舗検索画面の切り替え
 ============================= */
-
 // 検索画面を開く
 openStoreSearchBtn.addEventListener('click', () => {
     storeMainView.hidden = true;
     storeSearchView.hidden = false;
+    renderStoreSearchList();
 });
 
 // 店舗メモ画面に戻る
 backToStoreBtn.addEventListener('click', () => {
     storeSearchView.hidden = true;
     storeMainView.hidden = false;
+});
+
+// 店舗一覧ボタン
+showStoreListBtn.addEventListener('click', () => {
+    currentStoreSearchType = 'store';
+    showStoreListBtn.classList.add('active');
+    showProductListBtn.classList.remove('active');
+    renderStoreSearchList();
+});
+
+// 商品一覧ボタン
+showProductListBtn.addEventListener('click', () => {
+    currentStoreSearchType = 'product';
+    showProductListBtn.classList.add('active');
+    showStoreListBtn.classList.remove('active');
+    renderStoreSearchList();
+});
+
+// 検索欄
+storeSearchInput.addEventListener('input', () => {
+    renderStoreSearchList();
 });
 
 /* =============================
