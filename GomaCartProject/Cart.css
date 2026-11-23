@@ -234,6 +234,20 @@ button.add-btn {
     cursor: pointer;
 }
 
+/* ===== 商品価格比較：最安値表示 ===== */
+.cheapest-price p {
+    color: #e53935;
+    font-weight: bold;
+}
+
+.cheapest-label {
+    display: inline-block;
+    color: #e53935;
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 4px;
+}
+
 /* ===== スマホUI対応 ===== */
 @media (max-width: 600px) {
 
