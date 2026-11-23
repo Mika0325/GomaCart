@@ -262,7 +262,7 @@ button.add-btn {
 #backToStoreSearchListBtn {
     background-color: #fef4f4;
     color: #333333;
-    border: 1px solid #f09199;
+    border: 1px solid #333333;
     border-radius: 6px;
     padding: 0.5rem 0.8rem;
     cursor: pointer;
@@ -272,7 +272,7 @@ button.add-btn {
 #storeSearchInput {
     width: 100%;
     padding: 0.7rem;
-    border: 1px solid #f09199;
+    border: 1px solid #333333;
     border-radius: 8px;
     background-color: #ffffff;
     box-sizing: border-box;
