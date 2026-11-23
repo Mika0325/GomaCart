@@ -235,11 +235,6 @@ button.add-btn {
 }
 
 /* ===== 商品価格比較：最安値表示 ===== */
-.cheapest-price p {
-    color: #e53935;
-    font-weight: bold;
-}
-
 .cheapest-label {
     display: inline-block;
     color: #e53935;
@@ -287,6 +282,111 @@ button.add-btn {
     outline: none;
     border-color: #f09199;
     box-shadow: 0 0 0 2px rgba(240, 145, 153, 0.2);
+}
+
+/* ===== 店舗・商品検索タブ　===== */
+.store-search-tabs {
+    display: flex;
+    gap: 8px;
+    margin: 15px 0;
+    padding: 5px;
+    background-color: #fef4f4;
+    border-radius: 8px;
+}
+
+.store-search-tabs button {
+    flex: 1;
+    padding: 0.7rem;
+    border: none;
+    border-radius: 6px;
+    background-color: transparent;
+    color: #666666;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.store-search-tabs button.active {
+    background-color: #f09199;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+/* ===== 店舗・商品検索結果 ===== */
+#storeSearchList li {
+    background-color: #fef4f4;
+    border: 1px solid #fce4e4;
+    border-radius: 10px;
+    padding: 0.9rem;
+    margin: 0.6rem 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#storeSearchList li:hover {
+    background-color: #fce4e4;
+}
+
+#storeSearchList .store-search-result {
+    width: 100%;
+    font-weight: bold;
+    color: #333333;
+    box-sizing: border-box;
+}
+
+/* ===== 店舗・商品検索 詳細画面　===== */
+
+/* 詳細画面のヘッダー */
+#storeSearchDetailView .store-search-header {
+    margin-bottom: 20px;
+}
+
+/* 詳細画面のタイトル */
+#storeSearchDetailTitle {
+    font-size: 1.2rem;
+    font-weight: bold;
+    overflow-wrap: anywhere;
+}
+
+/* 詳細画面の商品・店舗カード */
+#storeSearchDetailContent li {
+    background-color: #fef4f4;
+    border: 1px solid #fce4e4;
+    border-radius: 10px;
+    padding: 0.9rem;
+    margin: 0.6rem 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+/* 詳細カード内の商品名・店舗名 */
+#storeSearchDetailContent strong {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 6px;
+}
+
+/* 価格・メモ */
+#storeSearchDetailContent p {
+    margin: 5px 0;
+    font-size: 0.9rem;
+    color: #555555;
+}
+
+/* 最安値 */
+#storeSearchDetailContent .cheapest-price p {
+    color: #e53935;
+    font-weight: bold;
+}
+
+#storeSearchDetailContent .cheapest-label {
+    display: inline-block;
+    color: #e53935;
+    background-color: #fff0f0;
+    border-radius: 5px;
+    padding: 3px 7px;
+    font-size: 0.8rem;
+    font-weight: bold;
 }
 
 /* ===== スマホUI対応 ===== */
