@@ -335,8 +335,12 @@ button.add-btn {
     box-sizing: border-box;
 }
 
-/* ===== 店舗・商品検索 詳細画面　===== */
+#storeSearchList {
+    list-style: none;
+    padding-left: 0;
+}
 
+/* ===== 店舗・商品検索 詳細画面　===== */
 /* 詳細画面のヘッダー */
 #storeSearchDetailView .store-search-header {
     margin-bottom: 20px;
