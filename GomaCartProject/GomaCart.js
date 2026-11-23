@@ -646,6 +646,13 @@ function renderStoreSearchList() {
             </div>
         `);
     }
+    // 検索結果のリストマーカーを非表示にする
+    storeSearchList.style.listStyle = 'none';
+    storeSearchList.style.padding = '0';
+
+    storeSearchList.querySelectorAll('li').forEach(li => {
+        li.style.listStyle = 'none';
+    });
 }
 
 /* =============================
