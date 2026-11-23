@@ -16,7 +16,7 @@
         <section id="shopping" class="tab-content active">
             <h2>買い物リスト</h2>
             <input id="itemName" type="text" placeholder="アイテム名">
-            <input id="itemQty" type="text" placeholder="数量">
+            <input id="itemQty" type="number" placeholder="数量" min="0" step="1">
             <textarea id="itemMemo" placeholder="メモ"></textarea>
             <button class="add-btn" id="addItemBtn">追加</button>
             <ul class="item-list" id="shoppingList"></ul>
@@ -25,7 +25,7 @@
         <section id="stock" class="tab-content">
             <h2>在庫管理</h2>
             <input id="stockName" type="text" placeholder="アイテム名">
-            <input id="stockQty" type="text" placeholder="数量">
+            <input id="stockQty" type="number" placeholder="数量" min="0" step="1">
             <textarea id="stockMemo" placeholder="メモ"></textarea>
             <button class="add-btn" id="addStockBtn">追加</button>
             <ul class="item-list" id="stockList"></ul>

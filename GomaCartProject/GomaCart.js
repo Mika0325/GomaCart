@@ -401,6 +401,26 @@ function validateInput(value) {
 }
 
 /* =============================
+   数量の入力チェック
+============================= */
+function validateQuantity(value) {
+    // 未入力は許可する
+    if (value === '') {
+        return true;
+    }
+
+    const quantity = Number(value);
+
+    // 0以上の整数か確認
+    if (!Number.isInteger(quantity) || quantity < 0) {
+        alert('数量は0以上の整数で入力してください。');
+        return false;
+    }
+
+    return true;
+}
+
+/* =============================
    HTML表示用の文字変換
 ============================= */
 function escapeHTML(value) {
@@ -573,6 +593,7 @@ function renderAllLists() {
 ============================= */
 addItemBtn.addEventListener('click', async () => {
     if (!validateInput(itemName.value)) return;
+    if (!validateQuantity(itemQty.value)) return;
 
     shoppingItems.push({
         name: itemName.value.trim(),
@@ -594,6 +615,7 @@ addItemBtn.addEventListener('click', async () => {
 ============================= */
 addStockBtn.addEventListener('click', async () => {
     if (!validateInput(stockName.value)) return;
+    if (!validateQuantity(stockQty.value)) return;
 
     stockItems.push({
         name: stockName.value.trim(),
@@ -743,6 +765,7 @@ document.addEventListener('click', async e => {
 
             const qty = prompt('数量', item.qty);
             if (qty === null) return;
+            if (!validateQuantity(qty)) return;
 
             const memo = prompt('メモ', item.memo);
             if (memo === null) return;
@@ -770,6 +793,7 @@ document.addEventListener('click', async e => {
 
             const qty = prompt('数量', item.qty);
             if (qty === null) return;
+            if (!validateQuantity(qty)) return;
 
             const memo = prompt('メモ', item.memo);
             if (memo === null) return;
