@@ -32,18 +32,44 @@
         </section>
 
         <section id="store" class="tab-content">
-            <div class="store-header">
-                <h2>店舗メモ</h2>
-                <button type="button" id="openStoreSearchBtn" class="store-search-btn">
-                    🔍
-                </button>
+            <!-- 通常の店舗メモ画面 -->
+            <div id="storeMainView">
+                <div class="store-header">
+                    <h2>店舗メモ</h2>
+                    <button type="button" id="openStoreSearchBtn" class="store-search-btn">
+                        🔍
+                    </button>
+                </div>
+
+                <input id="storeName" type="text" placeholder="店舗名">
+                <input id="storeItem" type="text" placeholder="商品名">
+                <input id="storePrice" type="text" placeholder="値段">
+                <textarea id="storeMemo" placeholder="メモ"></textarea>
+                <button class="add-btn" id="addStoreBtn">追加</button>
+                <ul class="item-list" id="storeList"></ul>
             </div>
-            <input id="storeName" type="text" placeholder="店舗名">
-            <input id="storeItem" type="text" placeholder="商品名">
-            <input id="storePrice" type="text" placeholder="値段">
-            <textarea id="storeMemo" placeholder="メモ"></textarea>
-            <button class="add-btn" id="addStoreBtn">追加</button>
-            <ul class="item-list" id="storeList"></ul>
+
+            <!-- 検索画面 -->
+            <div id="storeSearchView" hidden>
+                <div class="store-search-header">
+                    <button type="button" id="backToStoreBtn">← 戻る</button>
+                    <h2>店舗・商品検索</h2>
+                </div>
+
+                <input id="storeSearchInput" type="text" placeholder="店舗名・商品名を検索">
+
+                <div class="store-search-tabs">
+                    <button type="button" id="showStoreListBtn" class="active">
+                        店舗一覧
+                    </button>
+
+                    <button type="button" id="showProductListBtn">
+                        商品一覧
+                    </button>
+                </div>
+
+                <ul class="item-list" id="storeSearchList"></ul>
+            </div>
         </section>
 
         <!-- アカウント・会員登録・ログイン -->

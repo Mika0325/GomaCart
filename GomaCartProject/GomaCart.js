@@ -45,7 +45,6 @@ let storeItems = [];
 
 let currentUserId = null;
 
-// HTML要素
 const shoppingList = document.getElementById('shoppingList');
 const stockList = document.getElementById('stockList');
 const storeList = document.getElementById('storeList');
@@ -66,6 +65,12 @@ const storeMemo = document.getElementById('storeMemo');
 const addItemBtn = document.getElementById('addItemBtn');
 const addStockBtn = document.getElementById('addStockBtn');
 const addStoreBtn = document.getElementById('addStoreBtn');
+
+const storeMainView = document.getElementById('storeMainView');
+const storeSearchView = document.getElementById('storeSearchView');
+
+const openStoreSearchBtn = document.getElementById('openStoreSearchBtn');
+const backToStoreBtn = document.getElementById('backToStoreBtn');
 
 const loginEmail = document.getElementById('loginEmail');
 const loginPassword = document.getElementById('loginPassword');
@@ -920,6 +925,22 @@ function showTab(id, btn) {
 
 // HTMLのonclickから呼び出せるようにする
 window.showTab = showTab;
+
+/* =============================
+   店舗検索画面の切り替え
+============================= */
+
+// 検索画面を開く
+openStoreSearchBtn.addEventListener('click', () => {
+    storeMainView.hidden = true;
+    storeSearchView.hidden = false;
+});
+
+// 店舗メモ画面に戻る
+backToStoreBtn.addEventListener('click', () => {
+    storeSearchView.hidden = true;
+    storeMainView.hidden = false;
+});
 
 /* =============================
    初期化
