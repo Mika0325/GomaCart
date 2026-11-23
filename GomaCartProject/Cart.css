@@ -340,6 +340,14 @@ button.add-btn {
     padding-left: 0;
 }
 
+#storeSearchList li {
+    list-style: none;
+}
+
+#storeSearchList li::marker {
+    content: "";
+}
+
 /* ===== 店舗・商品検索 詳細画面　===== */
 /* 詳細画面のヘッダー */
 #storeSearchDetailView .store-search-header {
