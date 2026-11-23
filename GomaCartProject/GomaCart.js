@@ -507,6 +507,18 @@ function renderStockList() {
         </div>
 
         <div class="item-actions">
+            <button class="quantity-btn minus-btn"
+                type="button"
+                data-index="${index}">
+                －
+            </button>
+
+            <button class="quantity-btn plus-btn"
+                type="button"
+                data-index="${index}">
+                ＋
+            </button>
+
             <div class="menu-container">
                 <button class="menu-btn"
                     type="button"
@@ -666,6 +678,58 @@ document.addEventListener('click', async e => {
     if (!(target instanceof Element)) return;
 
     const index = Number(target.dataset.index);
+
+    // 在庫数量を増やす・減らす
+    const plusBtn = e.target.closest('.plus-btn');
+    const minusBtn = e.target.closest('.minus-btn');
+
+    if (plusBtn || minusBtn) {
+        const button = plusBtn || minusBtn;
+        const index = Number(button.dataset.index);
+        const item = stockItems[index];
+
+        if (!item) return;
+
+        // 数量を数値に変換（空欄の場合は0）
+        let quantity = Number(item.qty) || 0;
+
+        if (plusBtn) {
+            quantity++;
+        } else {
+            quantity--;
+        }
+
+        // 数量が0未満にならないようにする
+        if (quantity < 0) {
+            quantity = 0;
+        }
+
+        // 数量が0になった場合は買い物リストへ移動
+        if (quantity === 0) {
+            // 商品名が同じ商品が買い物リストにあるか確認
+            const existingItem = shoppingItems.find(
+                shoppingItem => shoppingItem.name.trim() === item.name.trim()
+            );
+
+            // 同じ商品がなければ買い物リストに追加
+            if (!existingItem) {
+                shoppingItems.push({
+                    name: item.name,
+                    qty: '1',
+                    memo: item.memo || ''
+                });
+            }
+
+            // 在庫リストから削除
+            stockItems.splice(index, 1);
+        } else {
+            item.qty = String(quantity);
+        }
+
+        renderAllLists();
+        await saveData();
+        return;
+    }
 
     // 三点リーダーのメニュー開閉
     if (target.closest('.menu-btn')) {
