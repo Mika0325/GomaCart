@@ -312,6 +312,24 @@ button.add-btn {
     font-weight: bold;
 }
 
+/* 検索結果のリストマーカーを完全に非表示 */
+#storeSearchList {
+    list-style-type: none !important;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+}
+
+#storeSearchList li {
+    list-style-type: none !important;
+    padding-left: 0.9rem;
+}
+
+#storeSearchList li::before,
+#storeSearchList li::marker {
+    content: none !important;
+    display: none !important;
+}
+
 /* ===== 店舗・商品検索結果 ===== */
 #storeSearchList li {
     background-color: #fef4f4;
