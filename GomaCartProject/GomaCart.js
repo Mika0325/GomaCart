@@ -732,8 +732,35 @@ document.addEventListener('click', async e => {
 
         if (!Number.isInteger(index) || index < 0) return;
 
+        // 買い物リスト編集
+        if (type === 'shopping') {
+            const item = shoppingItems[index];
+
+            if (!item) return;
+
+            const name = prompt('商品名', item.name);
+            if (name === null) return;
+
+            const qty = prompt('数量', item.qty);
+            if (qty === null) return;
+
+            const memo = prompt('メモ', item.memo);
+            if (memo === null) return;
+
+            if (!name.trim()) {
+                alert('商品名を入力してください。');
+                return;
+            }
+
+            shoppingItems[index] = {
+                name: name.trim(),
+                qty: qty.trim(),
+                memo: memo.trim()
+            };
+        }
+
         // 在庫編集
-        if (type === 'stock') {
+        else if (type === 'stock') {
             const item = stockItems[index];
 
             if (!item) return;
