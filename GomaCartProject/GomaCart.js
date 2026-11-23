@@ -77,6 +77,11 @@ const showStoreListBtn = document.getElementById('showStoreListBtn');
 const showProductListBtn = document.getElementById('showProductListBtn');
 const storeSearchList = document.getElementById('storeSearchList');
 
+const storeSearchDetailView = document.getElementById('storeSearchDetailView');
+const backToStoreSearchListBtn = document.getElementById('backToStoreSearchListBtn');
+const storeSearchDetailTitle = document.getElementById('storeSearchDetailTitle');
+const storeSearchDetailContent = document.getElementById('storeSearchDetailContent');
+
 let currentStoreSearchType = 'store';
 
 const loginEmail = document.getElementById('loginEmail');
@@ -607,47 +612,114 @@ function renderStoreList() {
    店舗・商品検索一覧の描画
 ============================= */
 function renderStoreSearchList() {
-
-    // 検索文字を取得
     const keyword = storeSearchInput.value.trim().toLowerCase();
 
     if (currentStoreSearchType === 'store') {
-
         const stores = [...new Set(
             storeItems.map(item => item.storeName)
         )];
 
-        // 検索文字で絞り込み
         const filteredStores = stores.filter(store =>
             store.toLowerCase().includes(keyword)
         );
 
         renderList(storeSearchList, filteredStores, store => `
-            <div class="item-content">
+            <div class="item-content store-search-result"
+                data-value="${escapeHTML(store)}">
                 ${escapeHTML(store)}
             </div>
         `);
 
-    }
-
-    // 商品一覧
-    else {
-
-        // 重複しない商品名を取得
+    } else {
         const products = [...new Set(
             storeItems.map(item => item.itemName)
         )];
 
-        // 検索文字で絞り込み
         const filteredProducts = products.filter(product =>
             product.toLowerCase().includes(keyword)
         );
 
         renderList(storeSearchList, filteredProducts, product => `
-            <div class="item-content">
+            <div class="item-content store-search-result"
+                data-value="${escapeHTML(product)}">
                 ${escapeHTML(product)}
             </div>
         `);
+    }
+}
+
+/* =============================
+   店舗・商品検索の詳細画面
+============================= */
+function renderStoreSearchDetail(value) {
+    // 一覧画面を隠して詳細画面を表示
+    storeSearchList.hidden = true;
+    storeSearchInput.hidden = true;
+    document.querySelector('.store-search-tabs').hidden = true;
+    storeSearchDetailView.hidden = false;
+
+    storeSearchDetailTitle.textContent = value;
+
+    // 店舗を選択した場合
+    if (currentStoreSearchType === 'store') {
+        const filteredItems = storeItems.filter(item =>
+            item.storeName === value
+        );
+
+        renderList(storeSearchDetailContent, filteredItems, item => `
+            <div class="item-content">
+                <strong>${escapeHTML(item.itemName)}</strong>
+                ${item.price ? `<p>価格：${escapeHTML(item.price)}円</p>` : ''}
+                ${item.memo ? `<p>メモ：${escapeHTML(item.memo)}</p>` : ''}
+            </div>
+        `);
+
+        // 商品を選択した場合
+    } else {
+        const filteredItems = storeItems.filter(item =>
+            item.itemName === value
+        );
+
+        // 価格を数値に変換
+        const prices = filteredItems.map(item => {
+            const priceText = String(item.price ?? '')
+                .replace(/,/g, '')
+                .replace(/[^\d.]/g, '');
+
+            return {
+                item,
+                price: priceText ? Number(priceText) : NaN
+            };
+        }).filter(entry =>
+            Number.isFinite(entry.price)
+        );
+
+        // 最安値を取得
+        const minPrice = prices.length > 0
+            ? Math.min(...prices.map(entry => entry.price))
+            : null;
+
+        renderList(storeSearchDetailContent, filteredItems, item => {
+            const priceText = String(item.price ?? '')
+                .replace(/,/g, '')
+                .replace(/[^\d.]/g, '');
+
+            const priceNumber = priceText ? Number(priceText) : NaN;
+
+            const isCheapest =
+                minPrice !== null &&
+                Number.isFinite(priceNumber) &&
+                priceNumber === minPrice;
+
+            return `
+                <div class="item-content ${isCheapest ? 'cheapest-price' : ''}">
+                    <strong>${escapeHTML(item.storeName)}</strong>
+                    ${item.price ? `<p>価格：${escapeHTML(item.price)}円</p>` : ''}
+                    ${isCheapest ? '<span class="cheapest-label">最安値</span>' : ''}
+                    ${item.memo ? `<p>メモ：${escapeHTML(item.memo)}</p>` : ''}
+                </div>
+            `;
+        });
     }
 }
 
@@ -977,7 +1049,6 @@ function showTab(id, btn) {
     btn.classList.add('active');
 }
 
-// HTMLのonclickから呼び出せるようにする
 window.showTab = showTab;
 
 /* =============================
@@ -1015,6 +1086,26 @@ showProductListBtn.addEventListener('click', () => {
 // 検索欄
 storeSearchInput.addEventListener('input', () => {
     renderStoreSearchList();
+});
+
+// 店舗・商品の一覧をクリックしたとき
+storeSearchList.addEventListener('click', e => {
+    const result = e.target.closest('.store-search-result');
+
+    if (!result) return;
+
+    const value = result.dataset.value;
+
+    renderStoreSearchDetail(value);
+});
+
+// 詳細画面から一覧に戻る
+backToStoreSearchListBtn.addEventListener('click', () => {
+    storeSearchDetailView.hidden = true;
+
+    storeSearchList.hidden = false;
+    storeSearchInput.hidden = false;
+    document.querySelector('.store-search-tabs').hidden = false;
 });
 
 /* =============================
